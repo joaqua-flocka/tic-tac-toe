@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 class Board
   attr_accessor :board, :gameover
 
