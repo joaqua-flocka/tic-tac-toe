@@ -23,6 +23,11 @@ class Board
     @gameover = true
   end
 
+  def tie
+    puts "Tie game!"
+    @gameover = true
+  end
+
   def check_array(array)
     true if array.uniq.length == 1 && !array.include?(' ')
   end
@@ -53,10 +58,15 @@ class Board
     end
   end
 
+  def check_for_tie
+    tie if @board.flatten.none? { |space| space == ' '}
+  end
+
   def check_for_win
     check_row
     check_column
     check_diagonals
+    check_for_tie
   end
 end
 
