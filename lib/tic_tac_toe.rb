@@ -1,12 +1,8 @@
 class Board
   attr_accessor :board, :gameover
 
-  def initialize
-    @board = [
-      [' ', ' ', ' '],
-      [' ', ' ', ' '],
-      [' ', ' ', ' ']
-    ]
+  def initialize(board = [[' ', ' ', ' '],[' ', ' ', ' '],[' ', ' ', ' ']])
+    @board = board
     @gameover = false
   end
 
@@ -116,24 +112,28 @@ class Player
   end
 end
 
-keep_playing = true
+def main
+  keep_playing = true
 
-while keep_playing == true
-  board = Board.new
-  board.print_board
-  me = Player.new
-  you = Player.new
-  while board.gameover == false
-    me.make_move(board, you)
-    you.make_move(board, me) unless board.gameover
+  while keep_playing == true
+    board = Board.new
+    board.print_board
+    me = Player.new
+    you = Player.new
+    while board.gameover == false
+      me.make_move(board, you)
+      you.make_move(board, me) unless board.gameover
+    end
+    begin
+      puts 'Play again? [y/n]'
+      choice = gets.chomp.downcase
+      raise StandardError unless %w[y n].include?(choice)
+    rescue StandardError
+      puts 'Invalid choice! Please try again.'
+      retry
+    end
+    keep_playing = false if choice == 'n'
   end
-  begin
-    puts 'Play again? [y/n]'
-    choice = gets.chomp.downcase
-    raise StandardError unless %w[y n].include?(choice)
-  rescue StandardError
-    puts 'Invalid choice! Please try again.'
-    retry
-  end
-  keep_playing = false if choice == 'n'
 end
+
+#main
